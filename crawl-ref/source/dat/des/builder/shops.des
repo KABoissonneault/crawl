@@ -409,6 +409,95 @@ MAP
 .ccccccc.
 ENDMAP
 
+NAME:     nicolae_shop_advertising_works
+TAGS:     extra shop transparent
+# Exploiting subvault placement behavior to get the shop a varying distance
+# from the arrow.
+SUBVAULT: - : nico_adshop
+CLEAR:    -
+MAP
+.........             -------------------------------
+.....b...             -------------------------------
+......b..             -------------------------------
+.bbbbbbb.             -------------------------------
+......b..             -------------------------------
+.....b...             -------------------------------
+.........             -------------------------------
+ENDMAP
+
+NAME:  nicolae_subvault_shop_adworks
+TAGS:  unrand transparent allow_dup nico_adshop
+KFEAT: O = any shop
+MAP
+.......
+.b...b.
+..b.b..
+...O...
+..b.b..
+.b...b.
+.......
+ENDMAP
+
+NAME:    nicolae_shop_hallway_plus
+TAGS:    allow_dup extra shop transparent no_pool_fixup
+KFEAT:   O = any shop
+SHUFFLE: Pp/Pp/Rr, Qq/Qq/Ss
+SUBST:   P : xxxw, p : _, R : mmmw, r : ...xmwGT, \
+         Q : xxxw, q : _, S : mmmw, s : ...xmwGT
+KPROP:   Gw = no_tele_into
+CLEAR:   _
+MAP
+  x+x
+ pP.Qq
+xPP.QQx
++..O..+
+xQQ.PPx
+ qQ.Pp
+  x+x
+ENDMAP
+
+NAME:    nicolae_shop_hallway_stairs
+TAGS:    allow_dup extra shop transparent no_pool_fixup
+KFEAT:   O = any shop
+: if you.depth() == 1 then
+SUBST:   S = )}]
+: elseif you.depth_fraction() < 1 then
+SUBST:   S = (){}[]
+: else
+SUBST:   S = ({[
+: end
+SHUFFLE: Pp/Qq, Rr/Ss
+SUBST:   P : xw_, p = _, Q : mw+, q = ., R : xw_, r = _, S : mw+, s = .
+CLEAR:   _
+MAP
+    pp
+xxxxPPxxxx
++..O..S..+
+xxxxRRxxxx
+    rr
+ENDMAP
+
+# Q: Why is there a dead body outside your shop with blood everywhere?
+# A: Don't worry about it. Are you going to buy something or not?
+NAME:   nicolae_shop_slashed_prices
+TAGS:   extra shop transparent
+KITEM:  D = mundane dagger / mundane club / mundane hand axe / mundane spear
+KFEAT:  O = any shop
+KFEAT:  E = x
+NSUBST: - = D / Z / -
+SUBST:  . = `.., ! = `., - = ``., x = Exx
+KPROP:  `DOEZ = bloody
+: dgn.delayed_decay(_G, "Z", "human corpse" )
+MAP
+xx...xx
+x!!!!!x
+.!---!.
+.!-O-!.
+.!---!.
+x!!!!!x
+xx...xx
+ENDMAP
+
 ###############################################################################
 # <<2>> Themed.
 #       Not tagged shop, but still contains one. Can have threats, and can have
@@ -1042,6 +1131,88 @@ cc     cc
 ...ccc...
 ..c   c..
 cc     cc
+ENDMAP
+
+# Q: Why is the shop across from your fire supplies store burned down?
+# A: Don't worry about it. Are you going to buy something or not?
+NAME:     nicolae_shop_fire_sale
+TAGS:     extra transparent no_item_gen
+KITEM:    O = ring of ice w:5 / ring of protection from cold / \
+          damaged dagger ego:freezing / wand of iceblast charges:1 w:5
+KFEAT:    O = abandoned_shop
+KFEAT:    P = general shop type:Fire suffix:Supplies ; ring of fire | \
+          ring of protection from fire | staff of fire | wand of flame | \
+          any weapon ego:flaming w:30 | scroll of immolation | \
+          randbook disc:fire w:20 | manual of fire magic w:1 | \
+          any armour ego:fire_resistance w:30 | fire dragon armour w:5
+SUBVAULT: ' : nico_deadtrees
+MARKER:   O = lua:fog_machine { cloud_type = "black smoke", pow_min = 10, \
+              pow_max = 20, delay = 40, size = 1, walk_dist = 0 }
+MAP
+xxxxx@@xxxxx
+xx''....ttxx
+x''......ttx
+x'O.V..T.Ptx
+x''......ttx
+xx''....ttxx
+xxxxx@@xxxxx
+ENDMAP
+
+# Using a subvault so only these trees become dead trees.
+NAME:   nicolae_sub_dead_trees
+TAGS:   unrand nico_deadtrees
+SUBST:  t = tt.
+COLOUR: t = lightgrey / darkgrey
+TILE:   t = dngn_tree_dead
+: set_feature_name("tree", "dead tree")
+MAP
+t   t
+tt tt
+ ttt
+ENDMAP
+
+# This shop sells only unique rings. At least one randart, and also ordinary
+# rings whose pluses have been set via vault syntax to something besides the
+# default pluses for that type of ring.
+# For each of the six rings that can have pluses, there is the possibility of
+# a ring of that type whose pluses are worse than default (which makes it a bit
+# less useful, but cheaper, and so possibly more enticing to poor players),
+# and a ring of that type whose pluses are better than default (which will be
+# accordingly more expensive).
+# Default for dex/int/str: +6, default for ev/slay/prot: +4.
+NAME:   nicolae_shop_unique_rings
+TAGS:   transparent extra
+DEPTH:  D, Depths, Elf, Snake, Shoals
+WEIGHT: 5
+{{
+  local itemcount = crawl.roll_dice( 2, 3 ) + 1
+  local rings = {
+     "ring of dexterity    plus:" .. (crawl.roll_dice( 2, 3 ) - 1) ,
+     "ring of intelligence plus:" .. (crawl.roll_dice( 2, 3 ) - 1) ,
+     "ring of strength     plus:" .. (crawl.roll_dice( 2, 3 ) - 1) ,
+     "ring of evasion      plus:" .. (crawl.roll_dice( 2, 2 ) - 1) ,
+     "ring of slaying      plus:" .. (crawl.roll_dice( 2, 2 ) - 1) ,
+     "ring of protection   plus:" .. (crawl.roll_dice( 2, 2 ) - 1) ,
+     "ring of dexterity    plus:" .. (crawl.roll_dice( 1, 2 ) + 6) ,
+     "ring of intelligence plus:" .. (crawl.roll_dice( 1, 2 ) + 6) ,
+     "ring of strength     plus:" .. (crawl.roll_dice( 1, 2 ) + 6) ,
+     "ring of evasion      plus:" .. (crawl.roll_dice( 3, 2 ) + 2) ,
+     "ring of slaying      plus:" .. (crawl.roll_dice( 3, 2 ) + 2) ,
+     "ring of protection   plus:" .. (crawl.roll_dice( 3, 2 ) + 2) ,
+     "any ring randart", "any ring randart" }
+  local inventory = table.concat( util.random_subset( rings, itemcount ), " | ")
+  kfeat("P = jewellery shop type:One-of-a-Kind suffix:Rings count:" ..
+             (itemcount + 1) .. " use_all ; " ..
+             inventory .. " | any ring randart" )
+}}
+MAP
+  vvv..
+ v...v..
+v.....v.
+v..P..b@
+v.....v.
+ v...v..
+  vvv..
 ENDMAP
 
 ###############################################################################
