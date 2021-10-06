@@ -1137,6 +1137,7 @@ ENDMAP
 # A: Don't worry about it. Are you going to buy something or not?
 NAME:     nicolae_shop_fire_sale
 TAGS:     extra transparent no_item_gen
+DEPTH:    D:4-, Depths
 KITEM:    O = ring of ice w:5 / ring of protection from cold / \
           damaged dagger ego:freezing / wand of iceblast charges:1 w:5
 KFEAT:    O = abandoned_shop
