@@ -1144,7 +1144,7 @@ KFEAT:    P = general shop type:Fire suffix:Supplies ; ring of fire | \
           ring of protection from fire | staff of fire | wand of flame | \
           any weapon ego:flaming w:30 | scroll of immolation | \
           randbook disc:fire w:20 | manual of fire magic w:1 | \
-          any armour ego:fire_resistance w:30 | fire dragon armour w:5
+          any armour ego:fire_resistance w:30 | fire dragon scales w:5
 SUBVAULT: ' : nico_deadtrees
 MARKER:   O = lua:fog_machine { cloud_type = "black smoke", pow_min = 10, \
               pow_max = 20, delay = 40, size = 1, walk_dist = 0 }
