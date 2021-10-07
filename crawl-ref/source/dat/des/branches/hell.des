@@ -661,7 +661,9 @@ WEIGHT: 2
     "gold dragon scales randart", "tower shield randart",
     "ring of resist corrosion randart", "amulet of reflection randart",
     "scroll of enchant weapon q:10", "scroll of enchant armour q:10",
-    "potion of might q:10", "randbook disc:conjuration slevels:12" }, 2 )
+    "potion of might q:10", "randbook disc:conjuration slevels:12",
+    "randbook disc:earth slevels:12", "staff of earth",
+    "staff of conjuration" }, 2 )
 
   -- the Gehenna inventory focuses on fire resistance and cold damage, and
   -- some potions of invisibility since a lot of monsters there can't sInv,
@@ -671,7 +673,8 @@ WEIGHT: 2
     "ring of fire randart", "fire dragon scales randart",
     "wand of iceblast charges:25", "any armour good_item ego:fire_resistance",
     "any armour randart ego:fire_resistance", "potion of invisibility q:10",
-    "randbook disc:ice slevels:12", "randbook disc:translocation slevels:12"},2)
+    "randbook disc:ice slevels:12", "randbook disc:translocation slevels:12",
+    "staff of fire" }, 2 )
 
   -- the Cocytus inventory focuses on cold resistance and fire damage, and
   -- throws in some willpower for narguns
@@ -680,7 +683,7 @@ WEIGHT: 2
     "ring of ice randart", "ice dragon scales randart",
     "wand of flame charges:55", "any armour good_item ego:cold_resistance",
     "any armour randart ego:cold_resistance", "ring of willpower randart",
-    "randbook disc:fire slevels:12" }, 2 )
+    "randbook disc:fire slevels:12", "staff of air", "staff of cold" }, 2 )
 
   -- the Tartarus inventory focuses on increased willpower to counteract the
   -- Will/2 hell effect, as well rN+ for theme, scrolls of fog in bulk to deal
@@ -689,7 +692,8 @@ WEIGHT: 2
     "ring of positive energy randart", "any armour randart ego:positive_energy",
     "any armour randart ego:willpower", "pearl dragon scales randart",
     "scroll of fog q:10", "any armour good_item ego:positive_energy",
-    "any armour good_item ego:willpower" }, 2 )
+    "any armour good_item ego:willpower", "quicksilver dragon scales randart",
+    "staff of death" }, 2 )
 
   -- Generically useful in all the Hells, a lot of scrolls and potions in bulk,
   -- but also rings of rN+ and willpower, which are useful in all the Hells, and
@@ -708,7 +712,7 @@ WEIGHT: 2
     "randbook good_item", "randbook good_item", "ring of wizardry randart",
     "any magical staff", "scroll of acquirement", "any manual",
     "demon trident randart", "demon whip randart", "demon blade randart",
-    "javelin ego:silver q:25" }, 2)
+    "javelin ego:silver q:25", "any misc" }, 2)
 
   -- one guaranteed randart weapon with holy wrath, including ranged weapons
   local holyinv = util.random_subset( { "quick blade randart ego:holy_wrath",
